@@ -32,7 +32,8 @@ pipeline {
             steps {
                 script {
                     // Transfer the archive to the production server using SCP
-                    sh "scp useraccess_files.tar.gz $PRODUCTION_SERVER:~/useraccess_files.tar.gz"
+                    sh "scp useraccess_files.tar.gz $PRODUCTION_SERVER:/home/settorka/useraccess_files.tar.gz"
+
                 }
             }
         }
