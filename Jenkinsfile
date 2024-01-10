@@ -28,9 +28,9 @@ pipeline {
 
         stage('Transfer Repository to Production Server') {
             steps {
-                script {
+               script {
                     // Transfer the archive to the production server using sshpass and echo the password
-                    sh "scp useraccess_files.tar.gz settorka@172.21.88.16:/home/settorka/ <<< $PASSWORD"
+                    sh "echo $PASSWORD | sshpass -e scp -o BatchMode=yes -r useraccess_files.tar.gz $PRODUCTION_SERVER:/home/settorka/"
                 }
                 }
 
