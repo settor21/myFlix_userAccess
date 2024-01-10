@@ -26,9 +26,6 @@ pipeline {
         }
 
         stage('Transfer Repository to Production Server') {
-            when {
-                expression { params.TRANSFER_TO_PRODUCTION == 'true' }
-            }
             steps {
                 script {
                     // Transfer the archive to the production server using SCP
