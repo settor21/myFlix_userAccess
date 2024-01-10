@@ -29,8 +29,15 @@ pipeline {
         stage('Transfer Repository to Production Server') {
             steps {
                script {
-                    // Transfer the archive to the production server using sshpass and echo the password
-                    sh "echo $PASSWORD | sshpass -e scp -o BatchMode=yes -r useraccess_files.tar.gz $PRODUCTION_SERVER:/home/settorka/"
+                      // Transfer the archive to the production server using expect script
+                    sh '''
+                        expect -c "
+                            spawn scp useraccess_files.tar.gz $PRODUCTION_SERVER:/home/settorka/
+                            expect \"password:\"
+                            send \"$env(PASSWORD)\\r\"
+                            expect eof
+                        "
+                    '''
                 }
                 }
 
