@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         PRODUCTION_SERVER = 'settorka@172.21.88.16'
+        PRIVATE_KEY_PATH = '/var/jenkins_home/.ssh/jenkins_rsa'
     }
 
     stages {
