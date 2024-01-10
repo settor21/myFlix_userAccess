@@ -30,7 +30,8 @@ pipeline {
             steps {
                 script {
                     // Transfer the archive to the production server using sshpass and echo the password
-                    sh "echo '$PASSWORD' | sshpass -e scp useraccess_files.tar.gz $PRODUCTION_SERVER:/home/settorka/useraccess_files.tar.gz"
+                    sh "scp useraccess_files.tar.gz settorka@172.21.88.16:/home/settorka/ <<< $PASSWORD"
+"
                 }
                 }
 
