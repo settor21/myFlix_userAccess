@@ -2,8 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_HUB_USERNAME = credentials('DOCKER_HUB_USERNAME')
-        DOCKER_HUB_PASSWORD = credentials('DOCKER_HUB_PASSWORD')
+        DOCKER_HUB_CREDENTIALS = credentials('DOCKER_HUB_CREDENTIALS_ID')
         PRODUCTION_SERVER = 'settorka@172.21.88.16'
     }
 
@@ -21,17 +20,12 @@ pipeline {
         stage('Build and Push Docker Image') {
             steps {
                 script {
-                    // Log in to Docker Hub
-                    withCredentials([usernamePassword(credentialsId: DOCKER_HUB_USERNAME, usernameVariable: 'DOCKER_HUB_USERNAME', passwordVariable: 'DOCKER_HUB_PASSWORD')]) {
-                        sh "docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD"
+                    // Push Docker image to Docker Hub using withRegistry
+                    docker.withRegistry('https://registry.hub.docker.com', 'DOCKER_HUB_CREDENTIALS') {
+                        // Build and tag Docker image
+                        sh 'docker build -t altesande/useraccess:latest .'
+                        sh 'docker push altesande/useraccess:latest'
                     }
-
-                    // Build and tag Docker image
-                    sh 'docker build -t altesande/useraccess:latest .'
-                    sh 'docker tag altesande/useraccess:latest $DOCKER_HUB_USERNAME/useraccess:latest'
-
-                    // Push Docker image to Docker Hub
-                    sh 'docker push $DOCKER_HUB_USERNAME/useraccess:latest'
                 }
             }
         }
