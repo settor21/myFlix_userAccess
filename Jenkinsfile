@@ -28,19 +28,18 @@ pipeline {
 
         stage('Transfer Repository to Production Server') {
             steps {
-               script {
-                      // Transfer the archive to the production server using expect script
+                script {
+                    // Transfer the archive to the production server using expect script
                     sh '''
                         expect -c "
-                            spawn scp useraccess_files.tar.gz $PRODUCTION_SERVER:/home/settorka/
+                            spawn scp useraccess_files.tar.gz $env(PRODUCTION_SERVER):/home/settorka/
                             expect \"password:\"
                             send \"$env(PASSWORD)\\r\"
                             expect eof
                         "
                     '''
                 }
-                }
-
-                }
             }
         }
+    }
+}
