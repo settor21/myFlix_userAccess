@@ -20,12 +20,9 @@ pipeline {
         stage('Build and Push Docker Image') {
             steps {
                 script {
-                    // Push Docker image to Docker Hub using withRegistry
-                    docker.withRegistry('', 'DOCKER_HUB_CREDENTIALS') {
-                        // Build and tag Docker image
-                        sh 'docker build -t altesande/useraccess:latest .'
-                        sh 'docker push altesande/useraccess:latest'
-                    }
+                   // Build and tag Docker image
+                    sh 'docker build -t altesande/useraccess:latest .'
+                    sh 'docker push altesande/useraccess:latest'
                 }
             }
         }
