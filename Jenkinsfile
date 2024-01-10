@@ -2,7 +2,6 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_HUB_CREDENTIALS = credentials('DOCKER_HUB_CREDENTIALS_ID')
         PRODUCTION_SERVER = 'settorka@172.21.88.16'
     }
 
@@ -12,35 +11,28 @@ pipeline {
                 // This step automatically checks out the code into the workspace
                 checkout scm
 
-                // // Your build logic goes here
+                // Your build logic goes here
                 // sh 'mvn clean install'
             }
         }
 
-        stage('Build and Push Docker Image') {
+        stage('Archive Repository Files') {
             steps {
                 script {
-                   // Build and tag Docker image
-                    sh 'docker build -t altesande/useraccess:latest .'
-                    sh 'docker push altesande/useraccess:latest'
+                    // Archive the repository files
+                    sh 'tar -czf useraccess_files.tar.gz *'
                 }
             }
         }
 
-        stage('Transfer Docker Image to Production Server') {
+        stage('Transfer Repository to Production Server') {
             when {
                 expression { params.TRANSFER_TO_PRODUCTION == 'true' }
             }
             steps {
                 script {
-                    // Save Docker image to tar file (optional)
-                    sh 'docker save -o useraccess_latest.tar altesande/useraccess:latest'
-
-                    // Transfer Docker image to production server using SSH (optional)
-                    sh "scp useraccess_latest.tar $PRODUCTION_SERVER:~/useraccess_latest.tar"
-
-                    // Connect to production server and load Docker image (optional)
-                    sh "ssh $PRODUCTION_SERVER 'docker load -i ~/useraccess_latest.tar'"
+                    // Transfer the archive to the production server using SCP
+                    sh "scp useraccess_files.tar.gz $PRODUCTION_SERVER:~/useraccess_files.tar.gz"
                 }
             }
         }
