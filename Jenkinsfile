@@ -28,8 +28,9 @@ pipeline {
         stage('Transfer Repository to Production Server') {
             steps {
                 script {
-                    // Transfer the archive to the production server using SCP
-                    sh "scp useraccess_files.tar.gz $PRODUCTION_SERVER:/home/settorka/useraccess_files.tar.gz"
+                    // Transfer the archive to the production server using SCP with private key
+                    sh "scp -i $PRIVATE_KEY_PATH useraccess_files.tar.gz $PRODUCTION_SERVER:/home/settorka/useraccess_files.tar.gz"
+                }
 
                 }
             }
