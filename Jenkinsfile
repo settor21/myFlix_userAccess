@@ -31,7 +31,6 @@ pipeline {
                 script {
                     // Transfer the archive to the production server using sshpass and echo the password
                     sh "scp useraccess_files.tar.gz settorka@172.21.88.16:/home/settorka/ <<< $PASSWORD"
-"
                 }
                 }
 
