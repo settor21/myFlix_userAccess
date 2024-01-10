@@ -21,7 +21,7 @@ pipeline {
             steps {
                 script {
                     // Push Docker image to Docker Hub using withRegistry
-                    docker.withRegistry('https://registry.hub.docker.com', 'DOCKER_HUB_CREDENTIALS') {
+                    docker.withRegistry('', 'DOCKER_HUB_CREDENTIALS') {
                         // Build and tag Docker image
                         sh 'docker build -t altesande/useraccess:latest .'
                         sh 'docker push altesande/useraccess:latest'
