@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         NFS_SERVER = '172.21.88.16' // Replace with your NFS server IP
-        NFS_HTTP_PORT = '4000'       // Replace with the port of your HTTP server
+        
         NFS_SHARED_FOLDER = ''
     }
 
@@ -34,8 +34,7 @@ pipeline {
                    sh 'echo Hello'
                    sh 'pwd useraccess_files.tar.gz'
                    
-                   // Transfer the tar file using curl
-                    sh "curl --upload-file useraccess_files.tar.gz http://${env.NFS_SERVER}:${env.NFS_HTTP_PORT}"
+
                 }
             }
 
