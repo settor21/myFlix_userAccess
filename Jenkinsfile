@@ -34,7 +34,7 @@ pipeline {
                 script {
                     sh " echo 'Hello'"
                     sh " pwd useraccess_files.tar.gz"
-                    sh 'sshpass -p '$PASSWORD' $PRODUCTION_SERVER:/home/settorka/myflix'
+                    sh 'sshpass -p 'Iamasinner100%' ssh settorka@172.21.88.16'
 
                 }
             }
