@@ -3,8 +3,7 @@ pipeline {
 
     environment {
         PRODUCTION_SERVER = 'settorka@172.21.88.16'
-        PASSWORD = 'Iamasinner100%'
-        PUBLIC_KEY_PATH = '/var/jenkins_home/.ssh/id_rsa.pub'
+        CREDENTIAL_ID = 'github-private-key'
 
     }
 
@@ -34,7 +33,9 @@ pipeline {
                 script {
                     sh " echo 'Hello'"
                     sh " pwd useraccess_files.tar.gz"
-                    sh "sshpass -p 'Iamasinner100%' ssh settorka@172.21.88.16 'echo hello world'"
+                    sh "scp -i ${CREDENTIAL_ID} -o StrictHostKeyChecking=no /var/jenkins_home/workspace/myFlix-userAccess/useraccess_files.tar.gz $PRODUCTION_SERVER:/home/settorka/myflix"
+
+                    // sh "sshpass -p 'Iamasinner100%' ssh settorka@172.21.88.16 'echo hello world'"
 
                 }
             }
