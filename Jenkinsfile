@@ -33,6 +33,7 @@ pipeline {
             steps {
                 script {
                     sh " echo 'Hello'"
+                    sh " pwd useraccess_files.tar.gz"
                     // sh 'scp -i /var/jenkins_home/.ssh/id_rsa -o StrictHostKeyChecking=no useraccess_files.tar.gz $PRODUCTION_SERVER:/home/settorka/myflix'
 
                 }
