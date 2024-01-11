@@ -43,8 +43,8 @@ pipeline {
             steps {
                 script {
 
-                    sh " ssh -o StrictHostKeyChecking=no ${PROD_USERNAME}@${PROD_SERVER} 'cd myflix/user-access && docker build -t ${DOCKER_IMAGE_NAME} .'"
-                    sh "echo 'Docker image for userAccess rebuilt. Preparing to redeploy container to web...'
+                    sh "ssh -o StrictHostKeyChecking=no ${PROD_USERNAME}@${PROD_SERVER} 'cd myflix/user-access && docker build -t ${DOCKER_IMAGE_NAME} .'"
+                    sh "echo Docker image for userAccess rebuilt. Preparing to redeploy container to web..."
                 }
             }
         }
@@ -58,11 +58,11 @@ pipeline {
 
                     // Stop  the old Docker container on the production server
                     sh "ssh -o StrictHostKeyChecking=no ${PROD_USERNAME}@${PROD_SERVER} 'cd myflix/user-access && docker rm ${DOCKER_CONTAINER_NAME}'"
-                    sh "echo 'Container stopped and removed. Preparing to redeploy new version'
+                    sh "echo Container stopped and removed. Preparing to redeploy new version"
                     // Run the Docker container on the production server
                     sh "ssh -o StrictHostKeyChecking=no ${PROD_USERNAME}@${PROD_SERVER} 'cd myflix/user-access && docker run -d -p ${DOCKER_HOST_PORT}:${DOCKER_CONTAINER_PORT} --name ${DOCKER_CONTAINER_NAME} ${DOCKER_IMAGE_NAME}'"
 
-                    sh "echo 'userAccess Microservice Deployed!"
+                    sh "echo userAccess Microservice Deployed!"
                     
                 }
             }
