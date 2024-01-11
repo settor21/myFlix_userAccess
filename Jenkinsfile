@@ -34,12 +34,8 @@ pipeline {
                 script {
                     // Use sshagent to handle SSH key authentication
                     sshagent(['SSHKey']) {
-                        // Transfer the tar file to the production server
-                        sshPut(
-                            credentialsId: 'SSHKey', // Specify your SSH credentials ID
-                            remote: "${PRODUCTION_SERVER}:home/settorka/myflix/", // Specify the remote directory
-                            source: 'useraccess_files.tar.gz' // Specify the source file
-                        )
+                       // Transfer the tar file to the production server using scp
+                        sh "scp -o StrictHostKeyChecking=no -i ${PUBLIC_KEY_PATH} useraccess_files.tar.gz ${PRODUCTION_SERVER}:/home/settorka/myflix/"
                     }
                 }
             }
