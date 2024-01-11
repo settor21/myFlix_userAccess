@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         PRODUCTION_SERVER = 'settorka@172.21.88.16'
-        CREDENTIAL_ID = 'SSHKey'
+        CREDENTIAL_ID = credentials('SSHKey')
 
     }
 
