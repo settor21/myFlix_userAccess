@@ -18,7 +18,7 @@ pipeline {
                 checkout scm
 
                 // Remove existing tar file on the production server
-                sh "ssh -o StrictHostKeyChecking=no ${PROD_USERNAME}@${PROD_SERVER} 'rm -f ${PROD_DIR}/useraccess_files.tar.gz'"
+                // sh "ssh -o StrictHostKeyChecking=no ${PROD_USERNAME}@${PROD_SERVER} 'rm -f ${PROD_DIR}/useraccess_files.tar.gz'"
 
                 // Your build logic goes here
                 // sh 'mvn clean install'
