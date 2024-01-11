@@ -32,10 +32,15 @@ pipeline {
         stage('Transfer Repository to Production Servers') {
             steps {
                 script {
-                    sh " echo 'Hello'"
-                    sh " pwd useraccess_files.tar.gz"
-                    
-
+                    // Use sshagent to handle SSH key authentication
+                    sshagent(['SSHKey']) {
+                        // Transfer the tar file to the production server
+                        sshPut(
+                            credentialsId: 'SSHKey', // Specify your SSH credentials ID
+                            remote: "${PRODUCTION_SERVER}:home/settorka/myflix/", // Specify the remote directory
+                            source: 'useraccess_files.tar.gz' // Specify the source file
+                        )
+                    }
                 }
             }
 
