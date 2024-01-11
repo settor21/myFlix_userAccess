@@ -4,7 +4,7 @@ pipeline {
     environment {
         PROD_USERNAME = 'amedikusettor'
         PROD_SERVER = '34.139.58.141'
-        PROD_DIR = '/home/amedikusettor/myflix'
+        PROD_DIR = '/home/amedikusettor/myflix/user-access'
         DOCKER_IMAGE_NAME = 'user-access-deployment'
         DOCKER_CONTAINER_NAME = 'user-access'
         DOCKER_CONTAINER_PORT = '5000'
@@ -41,7 +41,7 @@ pipeline {
                     sh 'pwd useraccess_files.tar.gz'
                     // Transfer the zipped repository to the production server
                     sh "scp -o StrictHostKeyChecking=no useraccess_files.tar.gz ${PROD_USERNAME}@${PROD_SERVER}:${PROD_DIR}"
-                    sh "ssh -o StrictHostKeyChecking=no ${PROD_USERNAME}@${PROD_SERVER} 'pwd && cd myflix && tar -xzf useraccess_files.tar.gz && ls -l'"
+                    sh "ssh -o StrictHostKeyChecking=no ${PROD_USERNAME}@${PROD_SERVER} 'pwd && cd myflix/user-access && tar -xzf useraccess_files.tar.gz && ls -l'"
                 }
             }
         }
