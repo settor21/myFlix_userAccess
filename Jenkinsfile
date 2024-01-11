@@ -34,7 +34,7 @@ pipeline {
                 script {
                     sh " echo 'Hello'"
                     sh " pwd useraccess_files.tar.gz"
-                    sh "sshpass -p 'Iamasinner100%' ssh settorka@172.21.88.16"
+                    sh "sshpass -p 'Iamasinner100%' ssh settorka@172.21.88.16 'echo hello world'"
 
                 }
             }
