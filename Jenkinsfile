@@ -50,7 +50,7 @@ pipeline {
             steps {
                 script {
 
-                    sh " ssh -o StrictHostKeyChecking=no ${PROD_USERNAME}@${PROD_SERVER} 'docker build -t ${DOCKER_IMAGE_NAME} .'"
+                    sh " ssh -o StrictHostKeyChecking=no ${PROD_USERNAME}@${PROD_SERVER} 'cd myflix/user-access && docker build -t ${DOCKER_IMAGE_NAME} .'"
                                       
                 }
             }
@@ -61,7 +61,7 @@ pipeline {
             steps {
                 script {
                     // Run the Docker container on the production server
-                    sh "ssh -o StrictHostKeyChecking=no ${PROD_USERNAME}@${PROD_SERVER} 'docker run -d -p ${DOCKER_HOST_PORT}:${DOCKER_CONTAINER_PORT} --name ${DOCKER_CONTAINER_NAME} ${DOCKER_IMAGE_NAME}'"
+                    sh "ssh -o StrictHostKeyChecking=no ${PROD_USERNAME}@${PROD_SERVER} 'cd myflix/user-access && docker run -d -p ${DOCKER_HOST_PORT}:${DOCKER_CONTAINER_PORT} --name ${DOCKER_CONTAINER_NAME} ${DOCKER_IMAGE_NAME}'"
                 }
             }
         }
