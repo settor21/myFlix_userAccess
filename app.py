@@ -52,6 +52,9 @@ def subscribe(user_id, subscription_choice):
         return jsonify({'error': 'Invalid subscription choice'})
 
 
+@app.route('/')
+def index():
+    return render_template('index.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
