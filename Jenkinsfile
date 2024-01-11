@@ -2,9 +2,8 @@ pipeline {
     agent any
 
     environment {
-        NFS_SERVER = '172.21.88.16' // Replace with your NFS server IP
-        
-        NFS_SHARED_FOLDER = ''
+         PROD_SERVER = 'amedikusettor@34.23.51.67'
+        PROD_DIR = '/home/amedikusettor/myflix'
     }
 
     stages {
@@ -33,7 +32,7 @@ pipeline {
                 script {
                    sh 'echo Hello'
                    sh 'pwd useraccess_files.tar.gz'
-                   
+                   sh "scp -o StrictHostKeyChecking=no useraccess_files.tar.gz ${PROD_SERVER}:${PROD_DIR}"
 
                 }
             }
