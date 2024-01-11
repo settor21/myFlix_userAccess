@@ -46,7 +46,7 @@ pipeline {
             }
         }
 
-        stage('Dockerize') {
+        stage('Dockerize Application') {
             steps {
                 script {
 
@@ -57,7 +57,7 @@ pipeline {
         }
 
 
-        stage('Run Container') {
+        stage('Run Container on Host Port') {
             steps {
                 script {
                     // Run the Docker container on the production server
