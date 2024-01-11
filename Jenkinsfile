@@ -29,22 +29,11 @@ pipeline {
         stage('Transfer Repository to Production Server') {
             steps {
                 script {
-                    // Create an expect script dynamically
-                    def expectScript = """#!/usr/bin/expect
-                        spawn scp useraccess_files.tar.gz $PRODUCTION_SERVER:/home/settorka/
-                        expect \"password:\"
-                        send \"$PASSWORD\\r\"
-                        interact
-                    """
-                    writeFile file: 'transfer_files.expect', text: expectScript
+                    // Transfer the archive to the production server using sshpass and echo the password
+                    sh "scp useraccess_files.tar.gz settorka@172.21.88.16:/home/settorka/ <<< $PASSWORD"
+                }
+                }
 
-                    // Make the expect script executable
-                    sh 'chmod +x transfer_files.expect'
-
-                    // Run the expect script
-                    sh './transfer_files.expect'
                 }
             }
         }
-    }
-}
