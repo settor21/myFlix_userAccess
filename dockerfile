@@ -1,31 +1,21 @@
-# Version: 0.0.1
-FROM jenkins/jenkins:lts
-MAINTAINER Andy C “aecobley@dundee.ac.uk”
+# Use an official Python runtime as a parent image
+FROM python:3.9-slim
 
-USER root
+# Set the working directory to /app
+WORKDIR /app
 
-# Install necessary system packages
-RUN apt-get -y update \
-    && apt-get -y install maven \
-                          wget \
-                          software-properties-common \
-                          python3 \
-                          curl \
-                          gnupg \
-                          sshpass \
-                          docker.io \
-                          expect
+# Copy the current directory contents into the container at /app
+COPY . /app
 
-# Add Google Cloud SDK repository and install
-RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list \
-    && curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key --keyring /usr/share/keyrings/cloud.google.gpg  add - \
-    && apt-get update -y \
-    && apt-get install google-cloud-sdk -y
+# Install any needed packages specified in requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
-USER jenkins
+# Make port 5000 available to the world outside this container
+EXPOSE 5000
 
-ENV PATH=$PATH:/google-cloud-sdk/bin
+# Define environment variable
+ENV NAME World
 
-EXPOSE 80
-EXPOSE 8080
-EXPOSE 50000
+# Run app.py when the container launches
+CMD ["python", "app.py"]
+
