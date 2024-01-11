@@ -46,31 +46,31 @@ pipeline {
             }
         }
 
-        // stage('Dockerize') {
-        //     steps {
-        //         script {
+        stage('Dockerize') {
+            steps {
+                script {
 
-        //             sh " ssh -o StrictHostKeyChecking=no ${PROD_USERNAME}@${PROD_SERVER} docker build -t ${DOCKER_IMAGE_NAME} .
+                    sh " ssh -o StrictHostKeyChecking=no ${PROD_USERNAME}@${PROD_SERVER} docker build -t ${DOCKER_IMAGE_NAME} .
                     
-        //             // SSH into the production server and remove existing files in the folder
-        //             sh "ssh -o StrictHostKeyChecking=no ${PROD_USERNAME}@${PROD_SERVER} 'rm -rf ${PROD_DIR}/*'"
+                    // SSH into the production server and remove existing files in the folder
+                    sh "ssh -o StrictHostKeyChecking=no ${PROD_USERNAME}@${PROD_SERVER} 'rm -rf ${PROD_DIR}/*'"
         
-        //             // Extract the zipped repository and build the Docker image on the production server
-        //             sh "ssh -o StrictHostKeyChecking=no ${PROD_USERNAME}@${PROD_SERVER} 'cd ${PROD_DIR} && tar -xzf useraccess_files.tar.gz'"
+                    // Extract the zipped repository and build the Docker image on the production server
+                    sh "ssh -o StrictHostKeyChecking=no ${PROD_USERNAME}@${PROD_SERVER} 'cd ${PROD_DIR} && tar -xzf useraccess_files.tar.gz'"
 
                     
-        //         }
-        //     }
-        // }
+                }
+            }
+        }
 
 
-        // stage('Run Container') {
-        //     steps {
-        //         script {
-        //             // Run the Docker container on the production server
-        //             sh "ssh -o StrictHostKeyChecking=no ${PROD_USERNAME}@${PROD_SERVER} 'docker run -d -p ${DOCKER_HOST_PORT}:${DOCKER_CONTAINER_PORT} --name ${DOCKER_CONTAINER_NAME} ${DOCKER_IMAGE_NAME}'"
-        //         }
-        //     }
-        // }
+        stage('Run Container') {
+            steps {
+                script {
+                    // Run the Docker container on the production server
+                    sh "ssh -o StrictHostKeyChecking=no ${PROD_USERNAME}@${PROD_SERVER} 'docker run -d -p ${DOCKER_HOST_PORT}:${DOCKER_CONTAINER_PORT} --name ${DOCKER_CONTAINER_NAME} ${DOCKER_IMAGE_NAME}'"
+                }
+            }
+        }
     }
 }
