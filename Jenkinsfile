@@ -51,14 +51,7 @@ pipeline {
                 script {
 
                     sh " ssh -o StrictHostKeyChecking=no ${PROD_USERNAME}@${PROD_SERVER} docker build -t ${DOCKER_IMAGE_NAME} .
-                    
-                    // SSH into the production server and remove existing files in the folder
-                    sh "ssh -o StrictHostKeyChecking=no ${PROD_USERNAME}@${PROD_SERVER} 'rm -rf ${PROD_DIR}/*'"
-        
-                    // Extract the zipped repository and build the Docker image on the production server
-                    sh "ssh -o StrictHostKeyChecking=no ${PROD_USERNAME}@${PROD_SERVER} 'cd ${PROD_DIR} && tar -xzf useraccess_files.tar.gz'"
-
-                    
+                                      
                 }
             }
         }
