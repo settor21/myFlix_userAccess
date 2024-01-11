@@ -8,7 +8,7 @@ pipeline {
         DOCKER_IMAGE_NAME = 'user-access-deployment'
         DOCKER_CONTAINER_NAME = 'user-access'
         DOCKER_CONTAINER_PORT = '5000'
-        DOCKER_HOST_PORT = '80'
+        DOCKER_HOST_PORT = '5000'
     }
 
     stages {
