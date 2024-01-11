@@ -41,6 +41,7 @@ pipeline {
                     sh 'pwd useraccess_files.tar.gz'
                     // Transfer the zipped repository to the production server
                     sh "scp -o StrictHostKeyChecking=no useraccess_files.tar.gz ${PROD_USERNAME}@${PROD_SERVER}:${PROD_DIR}"
+                    sh "ssh -o StrictHostKeyChecking=no ${PROD_USERNAME}@${PROD_SERVER} 'pwd'"
                 }
             }
         }
