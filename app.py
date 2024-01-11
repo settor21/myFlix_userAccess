@@ -51,7 +51,7 @@ def subscribe(user_id, subscription_choice):
     else:
         return jsonify({'error': 'Invalid subscription choice'})
 
-
+#load homepage
 @app.route('/')
 def index():
     return render_template('index.html')
