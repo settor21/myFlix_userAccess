@@ -29,8 +29,7 @@ pipeline {
         stage('Transfer Repository to Production Server') {
             steps {
                 script {
-                    // Transfer the archive to the production server using SCP with password
-                    sh "sshpass -p 'Iamasinner100%' scp useraccess_files.tar.gz settorka@172.21.88.16:/home/settorka/myflix"                   
+                                       
 
                 }
             }
