@@ -28,20 +28,6 @@ pipeline {
             }
         }
 
-         stage('Copy SSH Public Key to WSL Ubuntu') {
-            steps {
-                script {
-                    // Debugging: Print the current directory
-                    sh 'pwd'
-
-                    // Debugging: List the contents of the current directory
-                    sh 'ls -l'
-
-                    // Copy the SSH public key to the WSL Ubuntu server
-                    sh "sshpass -p 'Iamasinner100%' scp $PUBLIC_KEY_PATH $PRODUCTION_SERVER:/home/settorka/.ssh/authorized_keys"
-                }
-            }
-        }
 
         stage('Transfer Repository to Production Servers') {
             steps {
