@@ -29,11 +29,8 @@ pipeline {
         stage('Transfer Repository to Production Server') {
             steps {
                 script {
-                    // Set SSHPASS environment variable
-                    sh 'export SSHPASS=$PASSWORD'
-
-                    // Use sshpass to execute the scp command
-                    sh 'sshpass -e scp -o BatchMode=yes -r useraccess_files.tar.gz $PRODUCTION_SERVER:/home/settorka/'
+                    // Transfer the archive to the production server using SCP with password
+                    sh "sshpass -p $PASSWORD scp useraccess_files.tar.gz $PRODUCTION_SERVER:/home/settorka/myflix"                   
 
                 }
             }
