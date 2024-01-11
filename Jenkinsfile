@@ -35,7 +35,7 @@ pipeline {
             steps {
                 script {
                     // Remove existing tar file on the production server
-                    sh "ssh ${PROD_USERNAME}@${PROD_SERVER} 'rm -f ${PROD_DIR}/useraccess_files.tar.gz'"
+                    sh "ssh -o StrictHostKeyChecking=no ${PROD_USERNAME}@${PROD_SERVER} 'rm -f ${PROD_DIR}/useraccess_files.tar.gz'"
         
                     // Transfer the zipped repository to the production server
                     sh "scp -o StrictHostKeyChecking=no useraccess_files.tar.gz ${PROD_USERNAME}@${PROD_SERVER}:${PROD_DIR}"
@@ -47,10 +47,10 @@ pipeline {
             steps {
                 script {
                     // SSH into the production server and remove existing files in the folder
-                    sh "ssh ${PROD_USERNAME}@${PROD_SERVER} 'rm -rf ${PROD_DIR}/*'"
+                    sh "ssh -o StrictHostKeyChecking=no ${PROD_USERNAME}@${PROD_SERVER} 'rm -rf ${PROD_DIR}/*'"
         
                     // Extract the zipped repository and build the Docker image on the production server
-                    sh "ssh ${PROD_USERNAME}@${PROD_SERVER} 'cd ${PROD_DIR} && tar -xzf useraccess_files.tar.gz && docker build -t ${DOCKER_IMAGE_NAME} .'"
+                    sh "ssh -o StrictHostKeyChecking=no ${PROD_USERNAME}@${PROD_SERVER} 'cd ${PROD_DIR} && tar -xzf useraccess_files.tar.gz && docker build -t ${DOCKER_IMAGE_NAME} .'"
                 }
             }
         }
@@ -60,7 +60,7 @@ pipeline {
             steps {
                 script {
                     // Run the Docker container on the production server
-                    sh "ssh ${PROD_USERNAME}@${PROD_SERVER} 'docker run -d -p ${DOCKER_HOST_PORT}:${DOCKER_CONTAINER_PORT} --name ${DOCKER_CONTAINER_NAME} ${DOCKER_IMAGE_NAME}'"
+                    sh "ssh -o StrictHostKeyChecking=no ${PROD_USERNAME}@${PROD_SERVER} 'docker run -d -p ${DOCKER_HOST_PORT}:${DOCKER_CONTAINER_PORT} --name ${DOCKER_CONTAINER_NAME} ${DOCKER_IMAGE_NAME}'"
                 }
             }
         }
