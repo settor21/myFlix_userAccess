@@ -4,6 +4,8 @@ pipeline {
     environment {
         PRODUCTION_SERVER = 'settorka@172.21.88.16'
         PASSWORD = 'Iamasinner100%'
+        PUBLIC_KEY_PATH = '/var/jenkins_home/.ssh/id_rsa.pub'
+
     }
 
     stages {
@@ -26,10 +28,13 @@ pipeline {
             }
         }
 
-        stage('Transfer Repository to Production Server') {
+
+        stage('Transfer Repository to Production Servers') {
             steps {
                 script {
-                    sh "echo 'Hello from local server'"
+                    sh " echo 'Hello'"
+                    sh " pwd useraccess_files.tar.gz"
+                    sh 'sshpass -p 'Iamasinner100%' ssh settorka@172.21.88.16'
 
                 }
             }
