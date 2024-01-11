@@ -50,7 +50,7 @@ pipeline {
             steps {
                 script {
 
-                    sh " ssh -o StrictHostKeyChecking=no ${PROD_USERNAME}@${PROD_SERVER} docker build -t ${DOCKER_IMAGE_NAME} .
+                    sh " ssh -o StrictHostKeyChecking=no ${PROD_USERNAME}@${PROD_SERVER} 'docker build -t ${DOCKER_IMAGE_NAME} .'"
                                       
                 }
             }
