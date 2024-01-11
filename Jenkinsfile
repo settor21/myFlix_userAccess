@@ -6,7 +6,7 @@ pipeline {
         CREDENTIAL_ID = credentials('SSHKey')
         DOCKER_REGISTRY = 'docker.io'
         DOCKER_USERNAME = 'altesande'
-        DOCKER_IMAGE_NAME = 'your_image_name'
+        DOCKER_IMAGE_NAME = 'userAccessDeployment'
         DOCKER_IMAGE_TAG = 'latest'
     }
 
@@ -43,8 +43,8 @@ pipeline {
                     // SSH into the production server and pull the Docker image
                     sshagent(credentials: [CREDENTIAL_ID]) {
                         sh "ssh $PRODUCTION_SERVER 'docker pull $DOCKER_REGISTRY/$DOCKER_USERNAME/$DOCKER_IMAGE_NAME:$DOCKER_IMAGE_TAG'"
-                        sh "ssh $PRODUCTION_SERVER 'docker stop your_container_name || true && docker rm your_container_name || true'"
-                        sh "ssh $PRODUCTION_SERVER 'docker run -d --name your_container_name -p 8080:8080 $DOCKER_REGISTRY/$DOCKER_USERNAME/$DOCKER_IMAGE_NAME:$DOCKER_IMAGE_TAG'"
+                        sh "ssh $PRODUCTION_SERVER 'docker stop userAccess || true && docker rm userAccess || true'"
+                        sh "ssh $PRODUCTION_SERVER 'docker run -d --name userAccess -p 8080:8080 $DOCKER_REGISTRY/$DOCKER_USERNAME/$DOCKER_IMAGE_NAME:$DOCKER_IMAGE_TAG'"
                     }
                 }
             }
