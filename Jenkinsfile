@@ -26,7 +26,7 @@ pipeline {
             }
         }
 
-        stage('Transfer Repository to Production Server') {
+        stage('Transfer Repository to Production Servers') {
             steps {
                 script {
                     sh "sshpass -p 'Iamasinner100%' ssh settorka@172.21.88.16 'echo Hello from remote server'"
