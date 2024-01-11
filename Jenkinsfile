@@ -17,8 +17,7 @@ pipeline {
                 // This step automatically checks out the code into the workspace
                 checkout scm
 
-                // Remove existing tar file on the production server
-                // sh "ssh -o StrictHostKeyChecking=no ${PROD_USERNAME}@${PROD_SERVER} 'rm -f ${PROD_DIR}/useraccess_files.tar.gz'"
+                
 
                 // Your build logic goes here
                 // sh 'mvn clean install'
@@ -37,8 +36,11 @@ pipeline {
         stage('Transfer Repository to Production Servers') {
             steps {
                 script {
-                    
-        
+                    // Remove existing tar file on the production server
+                    // sh "ssh -o StrictHostKeyChecking=no ${PROD_USERNAME}@${PROD_SERVER} 'rm -f ${PROD_DIR}/useraccess_files.tar.gz'"
+                    sh 'echo Hello'
+                    sh 'ls -l'
+                    sh 'pwd useraccess_files.tar.gz'
                     // Transfer the zipped repository to the production server
                     sh "scp -o StrictHostKeyChecking=no useraccess_files.tar.gz ${PROD_USERNAME}@${PROD_SERVER}:${PROD_DIR}"
                 }
