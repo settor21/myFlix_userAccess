@@ -1,3 +1,5 @@
+from pymongo import MongoClient
+from datetime import datetime
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify, make_response
 import requests, uuid
 
@@ -5,6 +7,13 @@ app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
 DB_SERVICE_URL = 'http://127.0.0.1:5002'
+
+
+# Initialize MongoDB client
+mongo_client = MongoClient(
+    'mongodb+srv://amedikusettor:Skaq0084@myflixproject.soxjrzv.mongodb.net/?retryWrites=true&w=majority')
+db = mongo_client['userSubscriptions']
+subscription_collection = db['subscriptionInit']
 
 # Function to check if a user with given email and password exists
 def authenticate_user(email, password):
@@ -46,11 +55,12 @@ def subscribe(user_id, subscription_choice):
         return redirect(url_for('login'))
 
     elif subscription_choice == 'paid-tier':
-        # For Paid-tier, set paidSubscriber to YES and amount to 5
-        data = {'userId': user_id, 'paidSubscriber': 'YES', 'amount': 5}
-        requests.post(f'{DB_SERVICE_URL}/add_subscription', json=data)
-        # Redirect to confirm page after successful signup for paid-tier
-        return redirect('http://127.0.0.1:5002/confirm')
+        # For Paid-tier, set paidSubscriber to YES and amount to 5, and store in MongoDB
+        data = {'userId': user_id, 'paidSubscriber': 'YES',
+                'amount': 5, 'timestamp': datetime.now()}
+        subscription_collection.insert_one(data)
+        # Redirect to subscribe page after successful signup for paid-tier
+        return redirect('http://127.0.0.1:5002/subscribe')
 
     else:
         return jsonify({'error': 'Invalid subscription choice'})
