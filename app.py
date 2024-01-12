@@ -6,7 +6,7 @@ import requests, uuid
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
-DB_SERVICE_URL = 'http://127.0.0.1:5002'
+DB_SERVICE_URL = 'http://127.0.0.1:6000'
 
 
 # Initialize MongoDB client
