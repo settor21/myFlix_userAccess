@@ -42,14 +42,19 @@ def subscribe(user_id, subscription_choice):
         # For Ad-tier, set paidSubscriber to NO and amount to 0
         data = {'userId': user_id, 'paidSubscriber': 'NO', 'amount': 0}
         requests.post(f'{DB_SERVICE_URL}/add_subscription', json=data)
+        # Redirect to login page after successful signup for ad-tier
+        return redirect(url_for('login'))
 
     elif subscription_choice == 'paid-tier':
-        # For Paid-tier, set paidSubscriber to YES and amount to 0
-        data = {'userId': user_id, 'paidSubscriber': 'YES', 'amount': 0}
+        # For Paid-tier, set paidSubscriber to YES and amount to 5
+        data = {'userId': user_id, 'paidSubscriber': 'YES', 'amount': 5}
         requests.post(f'{DB_SERVICE_URL}/add_subscription', json=data)
+        # Redirect to confirm page after successful signup for paid-tier
+        return redirect('http://127.0.0.1:5002/confirm')
 
     else:
         return jsonify({'error': 'Invalid subscription choice'})
+
 
 #load homepage
 @app.route('/')
