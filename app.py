@@ -104,10 +104,6 @@ def signup():
         subscription_choice = request.form.get('subscription')
         subscribe(user_id, subscription_choice)
 
-
-        # Redirect to login page after successful signup
-        return redirect(url_for('login'))
-
     return render_template('signup.html')
 
 if __name__ == '__main__':
