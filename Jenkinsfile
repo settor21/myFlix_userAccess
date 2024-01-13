@@ -17,7 +17,7 @@ pipeline {
                 // This step automatically checks out the code into the workspace.
                 checkout scm             
 
-                // Your build logic goes here
+                // Build logic
                 // sh 'mvn clean install' 
             }
         }
