@@ -15,7 +15,7 @@ mongo_client = MongoClient(
 db = mongo_client['userSubscriptions']
 subscription_collection = db['subscriptionInit']
 
-# Function to check if a user with given email and password exists
+# Function to check if a user with given email and password exists in db
 def authenticate_user(email, password):
     data = {'email': email, 'password': password}
     response = requests.post(f'{DB_SERVICE_URL}/authenticate', json=data)
