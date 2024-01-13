@@ -56,9 +56,12 @@ def subscribe(user_id, subscription_choice):
 
     elif subscription_choice == 'paid-tier':
         # For Paid-tier, set paidSubscriber to YES and amount to 5, and store in MongoDB
-        data = {'userId': user_id, 'paidSubscriber': 'YES',
+        data = {'userId': user_id, 'paidSubscriber': 'PENDING',
                 'amount': 5, 'timestamp': datetime.now()}
         subscription_collection.insert_one(data)
+        
+        # Send a POST request to /subscribe with the user_id in the JSON payload
+        requests.post('http://127.0.0.1:5002/subscribe', json={'user_id': user_id})
         # Redirect to subscribe page after successful signup for paid-tier
         return redirect('http://127.0.0.1:5002/subscribe')
 
