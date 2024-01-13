@@ -50,20 +50,15 @@ pipeline {
         }
 
 
-        stage('Redeploy Container to Web') {
+         stage('Redeploy Container to Web') {
             steps {
                 script {
-                    // Stop  the old Docker container on the production server
-                    sh "ssh -o StrictHostKeyChecking=no ${PROD_USERNAME}@${PROD_SERVER} 'cd myflix/user-access && docker stop ${DOCKER_CONTAINER_NAME}'"
+                    sh "ssh -o StrictHostKeyChecking=no ${PROD_USERNAME}@${PROD_SERVER} 'cd myflix/user-access && docker ps -q --filter name=${DOCKER_CONTAINER_NAME} | xargs -r docker stop'"
+                    sh "ssh -o StrictHostKeyChecking=no ${PROD_USERNAME}@${PROD_SERVER} 'cd myflix/user-access && docker ps -q --filter name=${DOCKER_CONTAINER_NAME} | xargs -r docker rm'"
 
-                    // Stop  the old Docker container on the production server
-                    sh "ssh -o StrictHostKeyChecking=no ${PROD_USERNAME}@${PROD_SERVER} 'cd myflix/user-access && docker rm ${DOCKER_CONTAINER_NAME}'"
                     sh "echo Container stopped and removed. Preparing to redeploy new version"
-                    // Run the Docker container on the production server
                     sh "ssh -o StrictHostKeyChecking=no ${PROD_USERNAME}@${PROD_SERVER} 'cd myflix/user-access && docker run -d -p ${DOCKER_HOST_PORT}:${DOCKER_CONTAINER_PORT} --name ${DOCKER_CONTAINER_NAME} ${DOCKER_IMAGE_NAME}'"
-
                     sh "echo userAccess Microservice Deployed!"
-                    
                 }
             }
         }
