@@ -25,8 +25,8 @@ def authenticate_user(email, password):
 def add_user(first_name, last_name, email, password):
     data = {'first_name': first_name, 'last_name': last_name,
             'email': email, 'password': password}
-    requests.post(f'{DB_SERVICE_URL}/add_user', json=data)
-    
+    response = requests.post(f'{DB_SERVICE_URL}/add_user', json=data)
+    return response
 
 # Function to get user_id based on first name, last name, and email
 def get_user_id(first_name, last_name, email):
@@ -109,31 +109,33 @@ def signup():
             return render_template('signup.html', error="Passwords do not match")
 
         # Add user to the database without assignment
-        add_user(first_name, last_name, email, password)
-        # Get user_id after adding the user
-        user_id = get_user_id(first_name, last_name, email)
+        new_user = add_user(first_name, last_name, email, password)
+        
+        if new_user != None:
+            # Get user_id after adding the user
+            user_id = get_user_id(first_name, last_name, email)
 
-        # Subscribe the user based on the chosen tier
-        subscription_choice = request.form.get('subscription')
-        print(subscription_choice)
-        # subscribe(user_id, subscription_choice)
-        if subscription_choice == 'ad-tier':
-            # For Ad-tier, set paidSubscriber to NO and amount to 0
-            data = {'userId': user_id, 'paidSubscriber': 'NO', 'amount': 0}
-            requests.post(f'{DB_SERVICE_URL}/add_subscription', json=data)
-            # Redirect to login page after successful signup for ad-tier
-            return redirect(url_for('login'))
+            # Subscribe the user based on the chosen tier
+            subscription_choice = request.form.get('subscription')
+            print(subscription_choice)
+            # subscribe(user_id, subscription_choice)
+            if subscription_choice == 'ad-tier':
+                # For Ad-tier, set paidSubscriber to NO and amount to 0
+                data = {'userId': user_id, 'paidSubscriber': 'NO', 'amount': 0}
+                requests.post(f'{DB_SERVICE_URL}/add_subscription', json=data)
+                # Redirect to login page after successful signup for ad-tier
+                return redirect(url_for('login'))
 
-        elif subscription_choice == 'paid-tier':
-            # For Paid-tier, set paidSubscriber to YES and amount to 5, and store in MongoDB
-            data = {'userId': user_id, 'paidSubscriber': 'PENDING',
-                    'amount': 5, 'timestamp': datetime.now()}
-            subscription_collection.insert_one(data)
-            
-            # Send a POST request to /subscribe with the user_id in the JSON payload
-            requests.post('http://127.0.0.1:5002/subscribe', json={'user_id': user_id})
-            # Redirect to subscribe page after successful signup for paid-tier
-            return redirect('http://127.0.0.1:5002/subscribe')
+            elif subscription_choice == 'paid-tier':
+                # For Paid-tier, set paidSubscriber to YES and amount to 5, and store in MongoDB
+                data = {'userId': user_id, 'paidSubscriber': 'PENDING',
+                        'amount': 5, 'timestamp': datetime.now()}
+                subscription_collection.insert_one(data)
+                
+                # Send a POST request to /subscribe with the user_id in the JSON payload
+                requests.post('http://127.0.0.1:5002/subscribe', json={'user_id': user_id})
+                # Redirect to subscribe page after successful signup for paid-tier
+                return redirect('http://127.0.0.1:5002/subscribe')
 
     return render_template('signup.html')
 
