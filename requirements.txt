@@ -1,6 +1,8 @@
 Flask
 requests
-jwt
+pyjwt
 Werkzeug
 pymongo
 datetime
+gunicorn 
+gevent
