@@ -7,5 +7,5 @@ datetime
 gunicorn 
 gevent
 uuid
-psycop2-binary
+psycopg2-binary
 bcrypt
