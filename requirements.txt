@@ -6,3 +6,6 @@ pymongo
 datetime
 gunicorn 
 gevent
+uuid
+psycop2-binary
+bcrypt
