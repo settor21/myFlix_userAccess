@@ -155,7 +155,7 @@ def subscribe(user_id, subscription_choice):
         ) as connection:
             cursor = connection.cursor()
             cursor.execute(
-                'INSERT INTO subscriptions (user_id, paidSubscriber, amount) VALUES (%s, %s, %s)',
+                'INSERT INTO subscriptions (userId, paidSubscriber, amount) VALUES (%s, %s, %s)',
                 (user_id, 'NO', 0)
             )
             connection.commit()
