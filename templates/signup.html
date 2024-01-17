@@ -2,43 +2,100 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="no-referrer" />
+
+    <link rel="stylesheet" href="https://storage.googleapis.com/myflix-staticfiles/style/signUp_style.css" />
     <title>Sign Up</title>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
 </head>
 
 <body>
-    <h2>Sign Up</h2>
-    {% if error %}
-    <p style="color: red;">{{ error }}</p>
-    {% endif %}
-    <form action="/signup" method="post">
-        <label for="first_name">First Name:</label>
-        <input type="text" id="first_name" name="first_name" required><br>
-        <label for="last_name">Last Name:</label>
-        <input type="text" id="last_name" name="last_name" required><br>
-        <label for="email">Email Address:</label>
-        <input type="email" id="email" name="email" required><br>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required><br>
-        <label for="confirm_password">Confirm Password:</label>
-        <input type="password" id="confirm_password" name="confirm_password" required><br>
-        <!-- Subscription choices within the same form -->
-        <div>
-            <h1>Choose Your Subscription Tier</h1>
-            <label>
-                <input type="radio" name="subscription" value="ad-tier" required>
-                Ad-tier (Free)
-            </label>
+    <div class="fullpage" style="background-image: url(https://storage.googleapis.com/myflix-staticfiles/img/main/background.jpg); background-repeat: no-repeat;width: 100%;height: 100%;">
+        <div class="showcase">
+            <nav class="showcase-top">
+                <a href="/">
+                    <img class="netflix-logo" src="https://storage.googleapis.com/myflix-staticfiles/img/main/logo.png" alt="Netflix Logo" />
+                </a>
+            </nav>
 
-            <label>
-                <input type="radio" name="subscription" value="paid-tier" required>
-                Paid-tier (£5 for premium movies)
-            </label>
+
+            <div class="signup-form-wrapper">
+                {% if error %}
+                <p style="color: red;">{{ error }}</p>
+                {% endif %}
+                <form class="signup-form" method="POST">
+                    <h1 class="signup-title">Sign Up</h1>
+                    <input type="text" class="signup-form-input" placeholder="First Name" id="firstName" value=""
+                        required />
+                    <input type="text" class="signup-form-input" placeholder="Last Name" id="lastName" value=""
+                        required />
+                    <input type="email" class="signup-form-input" placeholder="Email Address" value="" id="email"
+                        required />
+                    <input type="password" class="signup-form-input" placeholder="Password" autocomplete="Off" value=""
+                        id="password" required />
+
+                    <div style="accent-color: white; color: white;">
+
+                        <label>
+                            <input id="ad-tier" class="subscriber-choice" type="radio" name="subscription"
+                                value="ad-tier" required>
+                            Ad-tier (Free)
+                        </label>
+                        <label>
+                            <input class="subscriber-choice" type="radio" name="subscription" id="paid-tier"
+                                value="paid-tier" required>
+                            Paid-tier (£5/month)
+                        </label>
+
+                    </div>
+                    <br>
+                    <button class="signup-button" type="submit" id="signupbtn">Sign Up</button>
+                    <p class="signup-form-text">
+                        Already a user?
+                        <a href="/login" class="signin-button">Sign in now.</a>
+                    </p>
+                    <!-- <p class="signup-form-captcha">
+                        This page is protected by Google reCAPTCHA to ensure you are not a
+                        bot.
+                    </p> -->
+                </form>
+            </div>
         </div>
 
-        <button type="submit">Sign Up</button>
-    </form>
+        <div class="showcase-bottom">
+
+            <a href="#" class="footer-title">Questions? Call 000-800-040-1843</a>
+            <div class="footer-row">
+                <div class="footer-column">
+                    <a href="#" class="footer-link">FAQ</a>
+                    <a href="#" class="footer-link">Investor Relations</a>
+                    <a href="#" class="footer-link">Privacy</a>
+                    <a href="#" class="footer-link">Speed Test</a>
+                </div>
+                <div class="footer-column">
+                    <a href="#" class="footer-link">Help Center</a>
+                    <a href="#" class="footer-link">Jobs</a>
+                    <a href="#" class="footer-link">Cookie Preferences</a>
+                    <a href="#" class="footer-link">Legal Notices</a>
+                </div>
+                <div class="footer-column">
+                    <a href="#" class="footer-link">Account</a>
+                    <a href="#" class="footer-link">Ways to Wactch</a>
+                    <a href="#" class="footer-link">Corporate Inforamation</a>
+                    <a href="#" class="footer-link">Netflix Originals</a>
+                </div>
+                <div class="footer-column">
+                    <a href="#" class="footer-link">Media Center</a>
+                    <a href="#" class="footer-link">Terms of Use</a>
+                    <a href="#" class="footer-link">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
 
 </html>
