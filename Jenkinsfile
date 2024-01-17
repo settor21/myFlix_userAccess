@@ -26,11 +26,11 @@ pipeline {
             steps {
                 script {
                     sh 'echo Packaging files ....'
-                    sh "rm -f userAccess_files.tar.gz"
+                    
                     // sh 'ls -l'
                     // sh 'pwd useraccess_files.tar.gz'
                     // Archive the repository files
-                    sh 'tar -czf useraccess_files.tar.gz *'
+                    sh 'tar -czf useraccess_files.tar.gz * || true'
                     // Transfer the zipped repository to the production server
                     sh "scp -o StrictHostKeyChecking=no useraccess_files.tar.gz ${PROD_USERNAME}@${PROD_SERVER}:${PROD_DIR}"
                     sh 'echo Files transferred to server. Unpacking ...'
