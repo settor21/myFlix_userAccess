@@ -29,6 +29,8 @@ pipeline {
                         steps {
                             script {
                                 sh "echo Packaging files for ${SERVER_IP} ..."
+                                sh "rm -f userAccess_files.tar.gz || true"
+                                sh "rm -f userAccess_files.tar.gz || true"
                                 sh 'tar -czf userAccess_files.tar.gz *'
                                 sh "scp -o StrictHostKeyChecking=no userAccess_files.tar.gz ${PROD_USERNAME}@${SERVER_IP}:/home/${PROD_USERNAME}/myflix/user-access"
                                 sh "ssh -o StrictHostKeyChecking=no ${PROD_USERNAME}@${SERVER_IP} 'pwd && cd myflix/user-access && tar -xzf userAccess_files.tar.gz && ls -l'"

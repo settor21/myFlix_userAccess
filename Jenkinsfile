@@ -26,6 +26,8 @@ pipeline {
             steps {
                 script {
                     sh 'echo Packaging files ....'
+                    sh "rm -f userAccess_files.tar.gz || true"
+                                sh "rm -f userAccess_files.tar.gz || true"
                     // sh 'ls -l'
                     // sh 'pwd useraccess_files.tar.gz'
                     // Archive the repository files
