@@ -160,7 +160,7 @@ def subscribe(user_id, subscription_choice):
             )
             connection.commit()
         # Redirect to login page after successful signup for ad-tier
-        return redirect('http://127.0.0.1:5000/login')
+        return redirect('https://myflix.world/login')
 
     elif subscription_choice == 'paid-tier':
         # For Paid-tier, set paidSubscriber to YES and amount to 5
@@ -178,10 +178,29 @@ def subscribe(user_id, subscription_choice):
             )
             connection.commit()
         # Redirect to subscribe page after successful signup for paid-tier
-        return redirect('https://127.0.0.1:5002/subscribe')
+        return redirect('https://myflix.world:5002/subscribe')
 
     else:
         return jsonify({'error': 'Invalid subscription choice'})
+    
+    
+def get_user_tier(user_id):
+    with psycopg2.connect(
+        host=DB_HOST,
+        port=DB_PORT,
+        user=DB_USER,
+        password=DB_PASSWORD,
+        database=DB_NAME
+    ) as connection:
+        cursor = connection.cursor()
+        cursor.execute('''
+            SELECT paidSubscriber FROM subscriptions
+            WHERE userId = %s
+        ''', (user_id,))
+
+        user_tier = cursor.fetchone()
+
+    return user_tier[0] if user_tier else None
 
 
 # Load homepage
@@ -202,9 +221,17 @@ def login():
             # Generate a session ID and add the session to the sessions table
             session_id = generate_session_id()
             add_session(user[0], session_id)
+            
+            # Tier check: Get the user's tier from the subscriptions table
+            user_id = user[0]
+            user_tier = get_user_tier(user_id)
 
-            # Redirect to the home page
-            return redirect('http://127.0.0.1/ad-tier')
+            if user_tier == 'paid-tier':
+                # Redirect to the appropriate page for paid-tier users
+                return redirect('https://myflix.world/paid-tier')
+            else:
+                # Redirect to ad-tier for non-paid-tier users
+                return redirect('http://myflix.world/ad-tier')
 
         return render_template('login.html', error="Invalid email or password")
 
@@ -219,7 +246,10 @@ def signup():
         email = request.form['email']
         password = request.form['password']
         confirm_password = request.form['confirm_password']
-
+        
+        if first_name == '' or last_name == '' or email == '' or password == '' or confirm_password == '':
+            return render_template('signup.html', error="Enter text into the field(s)")
+            
         # Check if password and confirm_password match on the client side
         if password != confirm_password:
             return render_template('signup.html', error="Passwords do not match")
