@@ -23,7 +23,7 @@
                 {% if error %}
                 <p style="color: red;">{{ error }}</p>
                 {% endif %}
-                <form class="signup-form" method="POST">
+                <form class="signup-form" method="POST" action="/login">
                     <h1 class="signup-title">Sign In</h1>
                     <input type="email" class="signup-form-input" id="email" name="email" placeholder="Email Address"
                         value required />
