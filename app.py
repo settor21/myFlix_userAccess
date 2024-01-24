@@ -228,10 +228,10 @@ def login():
 
             if user_tier == 'paid-tier':
                 # Redirect to the appropriate page for paid-tier users
-                return redirect('http://127.0.0.1:5001/paid-tier')
+                return redirect('https://myflix.world/paid-tier')
             else:
                 # Redirect to ad-tier for non-paid-tier users
-                return redirect('http://127.0.0.1:5001/ad-tier')
+                return redirect('https://myflix.world/ad-tier')
 
         return render_template('login.html', error="Invalid email or password")
 
