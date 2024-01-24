@@ -224,6 +224,7 @@ def login():
             # Generate a session ID and add the session to the sessions table
             session_id = generate_session_id()
             add_session(user[0], session_id)
+            session['session_id'] = session_id
 
             # Tier check: Get the user's tier from the subscriptions table
             user_id = user[0]
