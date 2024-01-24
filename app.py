@@ -267,4 +267,4 @@ def signup():
 
 if __name__ == '__main__':
     create_tables()  # creates table first
-    app.run(host="0.0.0.0", debug=False, port=5000)  # will listen to all ports on production
+    app.run(host="0.0.0.0", debug=True, port=5000)  # will listen to all ports on production
