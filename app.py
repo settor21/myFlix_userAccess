@@ -160,7 +160,7 @@ def subscribe(user_id, subscription_choice):
             )
             connection.commit()
         # Redirect to login page after successful signup for ad-tier
-        return render_template('login.html')
+        return "login"
 
     elif subscription_choice == 'paid-tier':
         # For Paid-tier, set paidSubscriber to YES and amount to 5
@@ -178,12 +178,12 @@ def subscribe(user_id, subscription_choice):
             )
             connection.commit()
         # Redirect to subscribe page after successful signup for paid-tier
-        return redirect('https://myflix.world/subscribe')
+        return "subscribe"
 
     else:
         return jsonify({'error': 'Invalid subscription choice'})
-    
-    
+
+
 def get_user_tier(user_id):
     with psycopg2.connect(
         host=DB_HOST,
@@ -221,7 +221,7 @@ def login():
             # Generate a session ID and add the session to the sessions table
             session_id = generate_session_id()
             add_session(user[0], session_id)
-            
+
             # Tier check: Get the user's tier from the subscriptions table
             user_id = user[0]
             user_tier = get_user_tier(user_id)
@@ -246,7 +246,7 @@ def signup():
         email = request.form['email']
         password = request.form['password']
         confirm_password = request.form['confirm_password']
-        
+
         # Check if password and confirm_password match on the client side
         if password != confirm_password:
             return render_template('signup.html', error="Passwords do not match")
@@ -260,11 +260,16 @@ def signup():
         # Subscribe the user based on the chosen tier
         subscription_choice = request.form.get('subscription')
         # print(subscription_choice)
-        subscribe(user_id, subscription_choice)
+        choice = subscribe(user_id, subscription_choice)
+        if choice == "subscribe":
+            return redirect ('https//myflix.world/subscribe')
+        else:
+            return render_template("login.html")    
 
     return render_template('signup.html')
 
 
 if __name__ == '__main__':
     create_tables()  # creates table first
-    app.run(host="0.0.0.0", debug=True, port=5000)  # will listen to all ports on production
+    # will listen to all ports on production
+    app.run(host="0.0.0.0", debug=True, port=5000)
