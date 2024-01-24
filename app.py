@@ -160,7 +160,7 @@ def subscribe(user_id, subscription_choice):
             )
             connection.commit()
         # Redirect to login page after successful signup for ad-tier
-        return redirect(url_for('login'))
+        return render_template('login.html')
 
     elif subscription_choice == 'paid-tier':
         # For Paid-tier, set paidSubscriber to YES and amount to 5
@@ -178,7 +178,7 @@ def subscribe(user_id, subscription_choice):
             )
             connection.commit()
         # Redirect to subscribe page after successful signup for paid-tier
-        return redirect('https://127.0.0.1:5002/subscribe')
+        return redirect('https://myflix.world/subscribe')
 
     else:
         return jsonify({'error': 'Invalid subscription choice'})
@@ -247,9 +247,6 @@ def signup():
         password = request.form['password']
         confirm_password = request.form['confirm_password']
         
-        if first_name == '' or last_name == '' or email == '' or password == '' or confirm_password == '':
-            return render_template('signup.html', error="Enter text into the field(s)")
-            
         # Check if password and confirm_password match on the client side
         if password != confirm_password:
             return render_template('signup.html', error="Passwords do not match")
@@ -262,7 +259,7 @@ def signup():
 
         # Subscribe the user based on the chosen tier
         subscription_choice = request.form.get('subscription')
-        print(subscription_choice)
+        # print(subscription_choice)
         subscribe(user_id, subscription_choice)
 
     return render_template('signup.html')
