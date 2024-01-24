@@ -160,7 +160,7 @@ def subscribe(user_id, subscription_choice):
             )
             connection.commit()
         # Redirect to login page after successful signup for ad-tier
-        return redirect('https://myflix.world/login')
+        return redirect(url_for('login'))
 
     elif subscription_choice == 'paid-tier':
         # For Paid-tier, set paidSubscriber to YES and amount to 5
@@ -178,7 +178,7 @@ def subscribe(user_id, subscription_choice):
             )
             connection.commit()
         # Redirect to subscribe page after successful signup for paid-tier
-        return redirect('https://myflix.world:5002/subscribe')
+        return redirect('https://127.0.0.1:5002/subscribe')
 
     else:
         return jsonify({'error': 'Invalid subscription choice'})
@@ -228,10 +228,10 @@ def login():
 
             if user_tier == 'paid-tier':
                 # Redirect to the appropriate page for paid-tier users
-                return redirect('https://myflix.world/paid-tier')
+                return redirect('http://127.0.0.1:5001/paid-tier')
             else:
                 # Redirect to ad-tier for non-paid-tier users
-                return redirect('http://myflix.world/ad-tier')
+                return redirect('http://127.0.0.1:5001/ad-tier')
 
         return render_template('login.html', error="Invalid email or password")
 
