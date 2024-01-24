@@ -24,12 +24,12 @@
                 <p style="color: red;">{{ error }}</p>
                 {% endif %}
                 <form class="signup-form" method="POST" action="/login">
-                    {{ csrf_token() }}
                     <h1 class="signup-title">Sign In</h1>
                     <input type="email" class="signup-form-input" id="email" name="email" placeholder="Email Address"
                         value required />
                     <input type="password" class="signup-form-input" placeholder="Password" autocomplete="Off"
                         id="password" name="password" value required />
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                     <button class="signup-button" type="submit">Sign In</button>
                     <p class="signup-form-text">
                         New to Netflix?
