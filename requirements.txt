@@ -9,3 +9,4 @@ gevent
 uuid
 psycopg2-binary
 bcrypt
+flask-wtf

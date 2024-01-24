@@ -29,6 +29,7 @@
                 <p style="color: red;">{{ error }}</p>
                 {% endif %}
                 <form class="signup-form" method="POST" action="/signup">
+                    {{ csrf_token() }}
                     <h1 class="signup-title">Sign Up</h1>
                     <input type="text" class="signup-form-input" placeholder="First Name" id="first_name"
                         name="first_name" value="" required />
