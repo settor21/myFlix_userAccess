@@ -12,10 +12,10 @@ app.config['SECRET_KEY'] = 'your_secret_key'
 
 
 # PostgreSQL Configuration
-DB_HOST = '35.239.170.49'  # Replace with the IP address of your GCP VM
+DB_HOST = 'xxxxxx'  # Replace with the IP address of your GCP VM
 DB_PORT = 5432
 DB_USER = 'postgres'
-DB_PASSWORD = 'Skaq0084'
+DB_PASSWORD = 'xxxxxx'
 DB_NAME = 'users'
 
 
